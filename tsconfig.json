@@ -3,7 +3,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    // "baseUrl": "./",
     "paths": {
       // // "@/*":["./src/app/*"],
       "@auth/*":["./src/app/auth/*"],

@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+// import { rxResource } from '@angular/core/rxjs-interop';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ProductCard } from '@products/components/Product-card/Product-card';
 import { ProductService } from '@products/services/products.services';
@@ -10,13 +11,11 @@ import { ProductService } from '@products/services/products.services';
 })
 export class HomePage {
 
-  productServ = inject(ProductService)
 
-  //obtener del observable
-  productsResource = rxResource({
-    request: () => ({}),
-    loader: ({ request }) => {
-      return this.productServ.getProducts();
-    },
-  });
+  productsService = inject(ProductService);
+
+  // API correcta para Angular 20.3.x
+  productsResource = rxResource(
+    this.productsService.getProducts({})
+  );
 }
