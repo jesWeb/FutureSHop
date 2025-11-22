@@ -3,14 +3,14 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    // "baseUrl": "./",
     "paths": {
-      // // "@/*":["./src/app/*"],
+      "@app/*":["./src/app/*"],
       "@auth/*":["./src/app/auth/*"],
       "@dashboard/*":["./src/app/admin.dashboard/*"],
       "@products/*":["./src/app/products/*"],
       "@store-front/*":["./src/app/store-front"],
       "@shared/*":["./src/app/shared/*"],
+      "@env/*": ["./src/environments/*"]
       // "@/*":["./src/app/*"]
 
     },
