@@ -1,4 +1,4 @@
-<h1 class="text-3xl font-bold mt-3">Todos los Productos {{gender()}}</h1>
+<h1 class="text-3xl font-bold mt-3">Todos los Productos {{ gender() }}</h1>
 <h2 class="text-xl mb-5">Para Todos los gustos</h2>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2 gap-3">
@@ -7,9 +7,13 @@
   <product-card [product]="product" />
 
   }
-
   <!-- empty -->
   @empty {
   <p>No hay productos</p>
   }
 </div>
+
+<app-pagination
+  [pages]="productsResource.value()?.pages ?? 0"
+  [currentPage]="paginationServ.currentPage()"
+/>
