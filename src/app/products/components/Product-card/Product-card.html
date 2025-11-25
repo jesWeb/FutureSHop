@@ -5,13 +5,13 @@
   <div class="card-body">
     <h2
       class="card-title text-accent text-lg hover:underline cursor-pointer"
-      routerLink="['/product', product().slug]"
+      [routerLink]="['/product', product().slug]"
     >
       {{ product().title }}
     </h2>
     <p>{{ product().description | slice : 0 : 70 }} ...</p>
     <div class="card-actions justify-end">
-      <a class="link link-accent" routerLink="['/product', product().slug]">Ver mas</a>
+      <a class="link link-accent" [routerLink]="['/product', product().slug]">Ver mas</a>
     </div>
   </div>
 </div>
