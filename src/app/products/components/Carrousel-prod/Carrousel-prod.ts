@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, input, Input, viewChild, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, input, viewChild } from '@angular/core';
 import { productImagePipe } from '@app/products/pipes/product-image.pipe';
 // importar swiper carousel
 import Swiper from 'swiper';
@@ -33,7 +33,6 @@ export class CarrouselProd implements AfterViewInit {
     if (!element) return;
 
 
-
     const swiper = new Swiper(element, {
       // Optional parameters
       direction: 'horizontal',
@@ -59,7 +58,7 @@ export class CarrouselProd implements AfterViewInit {
     });
 
 
-    console.log('Swiper element:', element);
+    // console.log('Swiper element:', element);
   }
 
 }
