@@ -1,6 +1,4 @@
-<p>product-page works!</p>
 @if (porductResource.isLoading()) {
-
 <div class="flex justify-content-center items-center h-screen">
   <span class="loading loading-spinner loading-lg"></span>
 </div>
@@ -12,14 +10,12 @@
 @if (porductResource.hasValue()) {
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
   <!-- images -->
-  <carrousel-prod [images]="porductResource.value()!.images " />
-  <!--  -->
-  <div class="">
-    <h2 class="">{{ porductResource.value().title }}</h2>
+  <carrousel-prod [images]="porductResource.value()!.images" />
+  <!-- cuerpo -->
+  <div>
+    <h2 class="text-2xl font-bold">{{ porductResource.value()!.title }}</h2>
     <div class="divider"></div>
-    <p>{{ porductResource.value().description }}</p>
+    <p>{{ porductResource.value()!.description }}</p>
   </div>
-
-  <!--  -->
 </div>
 }

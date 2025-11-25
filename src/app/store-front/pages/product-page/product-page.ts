@@ -15,7 +15,7 @@ export class ProductPage {
   //servicio
   productService = inject(ProductService)
   //id
-  productIdSlug = this.activatedRoute.snapshot.params['idSlug']
+  productIdSlug = this.activatedRoute.snapshot.params['idSlug'];
 
 
   //rxResource

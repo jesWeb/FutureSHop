@@ -5,7 +5,7 @@ export const routes: Routes = [
 
   {
     path: '',
-    loadChildren: () => import('./store-front/store-front.route').then(fro => fro.StoreFrontRoutes)
+    loadChildren: () => import('./store-front/store-front.routes').then(fro => fro.StoreFrontRoutes)
   }
 
 
