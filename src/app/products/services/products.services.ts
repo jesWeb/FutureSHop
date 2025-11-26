@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Product, ResponseProduct } from '@products/interfaces/products.interface';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 
 
@@ -18,10 +18,26 @@ export class ProductService {
 
   private http = inject(HttpClient);
 
+  //cache de paginacion
+  private productoCache = new Map<string, ResponseProduct>();
+
+
   getProducts(options: options): Observable<ResponseProduct> {
 
     //desestructuracion de la url
     const { limit = 9, offset = 0, gender = '' } = options;
+
+    const key = `${limit}-${offset}-${gender}`;
+    // console.log(key);
+
+    if (this.productoCache.has(key)) {
+      return of(this.productoCache.get(key)!);
+    }
+
+
+
+
+
 
     return this.http
       .get<ResponseProduct>(`${baseUrl}/products`, {
@@ -31,7 +47,10 @@ export class ProductService {
           gender
         }
       })
-      .pipe(tap((resp) => console.log(resp)));
+      .pipe(
+        tap((resp) => console.log(resp)),
+        tap((resp)=>this.productoCache.set(key,resp))
+      );
   }
 
   //obtener productyo por id
