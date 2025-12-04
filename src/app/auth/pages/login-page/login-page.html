@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" class="flex flex-col gap-5">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
   <label class="input validator">
     <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <g
@@ -12,7 +12,7 @@
         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
       </g>
     </svg>
-    <input type="email" placeholder="mail@site.com" required />
+    <input type="email" placeholder="@correo.com" class="grow" formControlName="email" required />
   </label>
   <div class="validator-hint hidden">Enter valid email address</div>
   <!--  -->
@@ -34,7 +34,7 @@
     <input
       type="password"
       required
-      placeholder="Password"
+      placeholder="Contrasena"
       minlength="8"
       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
       title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
@@ -47,6 +47,26 @@
   </p>
   <!--  -->
   <button type="submit" class="btn btn-secondary">Iniciar session</button>
+
+
+  @if (hasError()) {
+  <div role="alert" class="alert alert-error animate-fadeIn fixed bottom-5 right-5 w-52">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6 shrink-0 stroke-current"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+    <span>Error! Verifica tu informacion.</span>
+  </div>
+  }
 
   <p class="text-slate-700 text-center">
     No tienes Cuenta?
