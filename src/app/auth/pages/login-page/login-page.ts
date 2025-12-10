@@ -13,8 +13,9 @@ export class LoginPage {
   fb = inject(FormBuilder);
   hasError = signal(false);
   IsPosting = signal(false);
-  authService = inject(AuthService)
   router = inject(Router)
+
+  authService = inject(AuthService)
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -24,7 +25,7 @@ export class LoginPage {
   onSubmit() {
 
     if (this.loginForm.invalid) {
-      this.hasError.set(true)
+      this.hasError.set(true);
       setTimeout(() => {
         this.hasError.set(false)
       }, 2500);
@@ -33,15 +34,19 @@ export class LoginPage {
 
     const { email = '', password = '' } = this.loginForm.value;
 
-    this.authService.login(email!, password!).subscribe((resp) => {
-      if (resp) {
+    this.authService.login(email!, password!).subscribe((isAutenticado) => {
+
+      if (isAutenticado) {
         this.router.navigateByUrl('/')
         return
       }
+
+      this.hasError.set(true);
+
       setTimeout(() => {
         this.hasError.set(false)
 
-      },2000)
+      }, 2000)
 
 
     })
