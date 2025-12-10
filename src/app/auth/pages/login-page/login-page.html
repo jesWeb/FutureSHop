@@ -12,7 +12,13 @@
         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
       </g>
     </svg>
-    <input type="email" placeholder="@correo.com" class="grow" formControlName="email" required />
+    <input
+      type="text"
+      placeholder="Correo electrónico"
+      class="grow"
+      formControlName="email"
+      required
+    />
   </label>
   <div class="validator-hint hidden">Enter valid email address</div>
   <!--  -->
@@ -31,20 +37,16 @@
         <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
       </g>
     </svg>
-    <input
-      type="password"
-      required
-      placeholder="Contrasena"
-    />
+    <input type="password" class="grow" placeholder="Contraseña" formControlName="password" />
   </label>
-  <p class="validator-hint hidden">
-    Must be more than 8 characters, including
-    <br />At least one number <br />At least one lowercase letter <br />At least one uppercase
-    letter
-  </p>
+
   <!--  -->
   <button type="submit" class="btn btn-secondary">Iniciar session</button>
 
+  <p class="text-slate-700 text-center">
+    ¿No tienes cuenta?
+    <a routerLink="/auth/Register" class="text-accent">Crea una aqui</a>
+  </p>
 
   @if (hasError()) {
   <div role="alert" class="alert alert-error animate-fadeIn fixed bottom-5 right-5 w-52">
@@ -64,9 +66,4 @@
     <span>Error! Verifica tu informacion.</span>
   </div>
   }
-
-  <p class="text-slate-700 text-center">
-    No tienes Cuenta?
-    <a routerLink="/auth/Register" class="text-accent">Crea una aqui</a>
-  </p>
 </form>

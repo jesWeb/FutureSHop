@@ -14,7 +14,7 @@ export class AuthService {
 
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<User | null>(null);
-  private _token = signal<string | null>(null)
+  private _token = signal<string | null>(localStorage.getItem('token'))
 
   private http = inject(HttpClient)
 
@@ -26,7 +26,7 @@ export class AuthService {
 
   authStatus = computed<AuthStatus>(() => {
     //
-    if (this._authStatus() === 'checking') return 'checking'
+    if (this._authStatus() === 'checking') return 'checking';
     //si esta autenticado
     if (this._user()) {
       return 'authenticated'

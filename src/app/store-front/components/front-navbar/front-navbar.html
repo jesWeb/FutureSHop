@@ -67,7 +67,21 @@
       </li>
     </ul>
   </div>
+
   <div class="navbar-end">
-    <a class="btn">Button</a>
+    @if (authServ.authStatus() === 'authenticated') {
+    <button class="btn btn-ghost">
+      {{ authServ.user()?.fullName }}
+    </button>
+    <button class="btn btn-sm btn-error" (click)="authServ.logout()">Salir</button>
+    }
+
+    @else if(authServ.authStatus()==='not-authenticated'){
+    <a routerLink="/auth/login" class="btn btn-secondary">Crear cuenta</a>
+    }
+
+    @else {
+    <a  class="btn btn-ghost">...</a>
+    }
   </div>
 </div>
