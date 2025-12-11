@@ -11,6 +11,9 @@ const baseUrl = environment.baseUrl;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  getAuthToken() {
+    throw new Error("Method not implemented.");
+  }
 
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<User | null>(null);
@@ -65,9 +68,9 @@ export class AuthService {
     }
 
     return this.http.get<AuthResponse>(`${baseUrl}/auth/check-status`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
+      // headers: {
+      //   Authorization: `Bearer ${token}`
+      // },
     }).pipe(
       map((resp) => this.validacionesLogin(resp)),
       catchError((error: any) => this.handleAuthError(error)),
@@ -83,7 +86,9 @@ export class AuthService {
     this._user.set(null)
     this._token.set(null)
     this._authStatus.set('not-authenticated')
+    //token en el sotrage
     localStorage.removeItem('token')
+
   }
 
 
@@ -92,9 +97,10 @@ export class AuthService {
     this._user.set(user);
     this._authStatus.set('authenticated');
     this._token.set(token)
+
     localStorage.setItem('token', token);
 
-    return true
+    return true;
 
   }
 
