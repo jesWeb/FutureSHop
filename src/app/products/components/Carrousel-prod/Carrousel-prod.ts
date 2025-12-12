@@ -18,7 +18,7 @@ import { Navigation, Pagination } from 'swiper/modules';
   styles: `
   .swiper{
     width:100%;
-    heigth:500px;
+    height:500px;
   }
   `
 })

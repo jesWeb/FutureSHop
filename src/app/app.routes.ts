@@ -12,12 +12,11 @@ export const routes: Routes = [
     canMatch: [
       NotAutenticatedGuard,
       //tambien puedes areagar funciones aqui
-      () => {
-        console.log('hola desde la ruta del guartd');
-        return false
+      // () => {
+      //   console.log('hola desde la ruta del guartd');
+      //   return false
 
-      }
-
+      // }
     ]
   },
 

@@ -10,10 +10,10 @@ type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 const baseUrl = environment.baseUrl;
 
 @Injectable({ providedIn: 'root' })
+
 export class AuthService {
-  getAuthToken() {
-    throw new Error("Method not implemented.");
-  }
+
+
 
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<User | null>(null);
@@ -32,12 +32,12 @@ export class AuthService {
     if (this._authStatus() === 'checking') return 'checking';
     //si esta autenticado
     if (this._user()) {
-      return 'authenticated'
+      return 'authenticated';
     }
 
-    return 'not-authenticated'
+    return 'not-authenticated';
 
-  })
+  });
 
 
   // * son geters que se encargaran para proteger el servicio
@@ -56,6 +56,18 @@ export class AuthService {
       )
   }
 
+  register(email: string, password: string, nombre: string): Observable<boolean> {
+    return this.http.post<AuthResponse>(`${baseUrl}/auth/Register`, {
+      email,
+      password,
+      nombre
+    }).pipe(
+      map((resp) => this.validacionesLogin(resp)),
+      catchError((error: any) => this.handleAuthError(error))
+    )
+  }
+
+
   // *
 
   checkStatus(): Observable<boolean> {
@@ -64,6 +76,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
 
     if (!token) {
+      this.logout()
       return of(false)
     }
 
