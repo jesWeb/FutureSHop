@@ -1,9 +1,28 @@
-<form
-  [formGroup]="registerForm"
-  (ngSubmit)="onSubmit()"
-  class="flex flex-col gap-5">
-  <!-- nombre -->
+<h1 class="text-2xl font-monospace font-bold text-secondary text-center mb-4.5">Crea una cuenta</h1>
 
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+  <!-- nombre -->
+  <label class="input validator">
+    <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <g
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        stroke-width="2.5"
+        fill="none"
+        stroke="currentColor"
+      >
+        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+      </g>
+    </svg>
+    <input
+      type="text"
+      placeholder="Correo electrónico"
+      class="grow"
+      formControlName="email"
+      required
+    />
+  </label>
   <!--  -->
   <label class="input validator">
     <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -47,8 +66,7 @@
   </label>
 
   <!--  -->
-  <button type="submit" class="btn btn-secondary">Crear Cuenta</button>
-
+  <button type="submit" class="btn btn-secondary mt-2 mb-2.5">Crear Cuenta</button>
 
   @if (hasError()) {
   <div role="alert" class="alert alert-error animate-fadeIn fixed bottom-5 right-5 w-52">
