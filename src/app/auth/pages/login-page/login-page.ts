@@ -49,12 +49,6 @@ export class LoginPage {
 
     })
 
-    // checkautenticacion
-
-    //regidtro
-
-    //logout
-
 
   }
 

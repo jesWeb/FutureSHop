@@ -45,6 +45,7 @@ export class AuthService {
   user = computed(() => this._user())
   token = computed(this._token)
 
+  //*metodo para login
   login(email: string, password: string): Observable<boolean> {
     return this.http
       .post<AuthResponse>(`${baseUrl}/auth/login`, {
@@ -56,11 +57,13 @@ export class AuthService {
       )
   }
 
-  register(email: string, password: string, nombre: string): Observable<boolean> {
-    return this.http.post<AuthResponse>(`${baseUrl}/auth/Register`, {
+  //* metodo para register
+
+  register(email: string, password: string, fullName: string): Observable<boolean> {
+    return this.http.post<AuthResponse>(`${baseUrl}/auth/register`, {
       email,
       password,
-      nombre
+      fullName
     }).pipe(
       map((resp) => this.validacionesLogin(resp)),
       catchError((error: any) => this.handleAuthError(error))
@@ -68,7 +71,7 @@ export class AuthService {
   }
 
 
-  // *
+  // * ver el estatus
 
   checkStatus(): Observable<boolean> {
 
@@ -93,7 +96,7 @@ export class AuthService {
   }
 
 
-  //logout
+  //*logout
 
   logout() {
     this._user.set(null)
@@ -105,7 +108,7 @@ export class AuthService {
   }
 
 
-
+  //* cvalidacion de login
   private validacionesLogin({ token, user }: AuthResponse) {
     this._user.set(user);
     this._authStatus.set('authenticated');
@@ -116,6 +119,10 @@ export class AuthService {
     return true;
 
   }
+
+
+
+
 
   private handleAuthError(error: any) {
     this.logout();

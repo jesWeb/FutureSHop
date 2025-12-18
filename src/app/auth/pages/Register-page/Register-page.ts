@@ -5,7 +5,7 @@ import { AuthService } from '@app/auth/services/auth.service';
 
 @Component({
   selector: 'app-register-page',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule],
   templateUrl: './Register-page.html',
 })
 export class RegisterPage {
@@ -21,7 +21,7 @@ export class RegisterPage {
   registerForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    nombre: ['', [Validators.required, Validators.minLength(6)]]
+    fullName: ['', [Validators.required, Validators.minLength(6)]]
   })
 
 
@@ -36,7 +36,7 @@ export class RegisterPage {
       return
     }
 
-    const { email = '', password = '', nombre = '' } = this.registerForm.value;
+    const { email = '', password = '', fullName: nombre = '' } = this.registerForm.value;
 
     this.authServ.register(email!, password!, nombre!).subscribe((isCreate) => {
 
