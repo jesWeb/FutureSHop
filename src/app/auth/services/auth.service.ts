@@ -39,7 +39,7 @@ export class AuthService {
 
   });
 
-  isAdmin = computed(() => this._user() ? roles.includes('admin') ?? false)
+  isAdmin = computed(() => this._user()?.roles.includes('admin') ?? false)
 
 
   // * son geters que se encargaran para proteger el servicio
