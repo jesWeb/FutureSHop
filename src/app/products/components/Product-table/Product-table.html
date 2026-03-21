@@ -39,13 +39,21 @@
             </div>
           </td>
           <td>
-            {{ prod.price  | currency}}
+            {{ prod.price | currency }}
           </td>
           <td>
-
+            @if (prod.stock <= 10) {
+              <span class="badge badge-error">{{ prod.stock }}</span>
+            } @else if (prod.stock <= 20) {
+              <span class="badge badge-warning">{{ prod.stock }}</span>
+            } @else {
+              <span class="badge badge-success">{{ prod.stock }}</span>
+            }
           </td>
           <th>
-            <button class="btn btn-ghost btn-xs">details</button>
+            <button [routerLink]="['/admin/products', prod.id]" class="btn btn-ghost btn-xs">
+              details
+            </button>
           </th>
         </tr>
       }
