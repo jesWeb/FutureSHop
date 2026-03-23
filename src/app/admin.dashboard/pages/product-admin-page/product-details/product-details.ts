@@ -49,10 +49,6 @@ export class ProductDetails implements OnInit {
   }
 
 
-  onSubmit() {
-    console.log(this.productForm.value);
-
-  }
 
   //*metodo de tallas
 
@@ -64,7 +60,12 @@ export class ProductDetails implements OnInit {
     } else {
       currentSize.push(size)
     }
+    this.productForm.patchValue({ sizes: currentSize })
   }
 
 
+  onSubmit() {
+    console.log(this.productForm.value);
+
+  }
 }

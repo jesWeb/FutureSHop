@@ -20,10 +20,12 @@ export class ProductoAdminLayout {
 
   // rxResource
   productsResource = rxResource({
-    params: () => ({ page: this.paginationServ.currentPage() - 1,
+    params: () => ({
+      page: this.paginationServ.currentPage() - 1,
       limit: this.productsPerPage()
     }),
-    stream: ({ params }) => this.productsService.getProducts({
+    stream: ({ params }) =>
+      this.productsService.getProducts({
       offset: params.page * 9,
       limit:params.limit
     })
