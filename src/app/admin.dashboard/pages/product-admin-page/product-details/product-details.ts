@@ -54,4 +54,17 @@ export class ProductDetails implements OnInit {
 
   }
 
+  //*metodo de tallas
+
+  onSizeClicked(size: string) {
+    const currentSize = this.productForm.value.sizes ?? []
+
+    if (currentSize.includes(size)) {
+      currentSize.splice(currentSize.indexOf(size), 1)
+    } else {
+      currentSize.push(size)
+    }
+  }
+
+
 }
