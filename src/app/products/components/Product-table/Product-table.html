@@ -31,9 +31,11 @@
                 </div>
               </div>
               <div>
-                <a [routerLink]="['/admin/products', prod.id]" class="font-bold hover:text-accent transition-colors duration-300">{{
-                  prod.title
-                }}</a>
+                <a
+                  [routerLink]="['/admin/products', prod.id]"
+                  class="font-bold hover:text-accent transition-colors duration-300"
+                  >{{ prod.title }}</a
+                >
                 <div class="text-sm opacity-50">{{ prod.sizes.join(', ') }}</div>
               </div>
             </div>
@@ -51,9 +53,12 @@
             }
           </td>
           <th>
-            <button [routerLink]="['/admin/products', prod.id]" class="btn btn-ghost btn-xs">
-              details
-            </button>
+            <a
+              [routerLink]="['/admin/products/', prod.id]"
+              class="btn btn-ghost text-accent btn-xs"
+            >
+              Detalles
+            </a>
           </th>
         </tr>
       }

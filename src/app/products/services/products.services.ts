@@ -24,6 +24,7 @@ export class ProductService {
   private prodCache = new Map<string, Product>();
 
 
+
   getProducts(options: options): Observable<ResponseProduct> {
 
     //desestructuracion de la url
@@ -83,4 +84,13 @@ export class ProductService {
       (product) => this.prodCache.set(id, product)
     ))
   }
+
+  //* actualizar
+  updateProduct(id: string, productLike: Partial<Product>): Observable<Product> {
+    console.log('actualizadno');
+    return this.http.patch<Product>(`${baseUrl}/products/${id}`, productLike)
+  }
+
+
+
 }

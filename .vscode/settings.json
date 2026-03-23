@@ -10,5 +10,7 @@
         "angular-component": {
             "skipChangeDetectionOnPush": true
         }
-    }
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "workbench.colorTheme": "Bearded Theme HC Minuit"
 }
