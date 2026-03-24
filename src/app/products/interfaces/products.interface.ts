@@ -20,6 +20,15 @@ export interface Product {
   user: User;
 }
 
+
+export enum Gender {
+  Kid = 'kid',
+  Men = 'men',
+  Unisex = 'unisex',
+  Women = 'women',
+}
+
+
 export enum Size {
   L = "L",
   M = "M",
