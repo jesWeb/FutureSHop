@@ -1,4 +1,4 @@
-import { Component, input, inject, OnInit } from '@angular/core';
+import { Component, input, inject, OnInit, signal } from '@angular/core';
 import { Product } from '@app/products/interfaces/products.interface';
 import { ProductCard } from "@app/products/components/Product-card/Product-card";
 import { CarrouselProd } from "@app/products/components/Carrousel-prod/Carrousel-prod";
@@ -6,6 +6,8 @@ import { FormBuilder, Validators, ɵInternalFormsSharedModule, ReactiveFormsModu
 import { FormUtils } from '@app/utils/form-utils';
 import { FormErrorLabel } from "@app/shared/components/form-error-label/form-error-label";
 import { ProductService } from '@app/products/services/products.services';
+import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'product-details',
@@ -14,8 +16,12 @@ import { ProductService } from '@app/products/services/products.services';
 })
 export class ProductDetails implements OnInit {
   product = input.required<Product>()
+
   fb = inject(FormBuilder)
+  router = inject(Router)
+
   productServ = inject(ProductService)
+  waSave = signal(false)
 
   //* inyeccion de formbuilder con patterns
   productForm = this.fb.group({
@@ -43,7 +49,6 @@ export class ProductDetails implements OnInit {
 
   ngOnInit() {
     this.setFormValue(this.product())
-    // this.productForm.reset(this.product() as any)
   }
 
   setFormValue(formLike: Partial<Product>) {
@@ -67,7 +72,7 @@ export class ProductDetails implements OnInit {
   }
 
 
-  onSubmit() {
+  async onSubmit() {
     const isValid = this.productForm.valid
     this.productForm.markAllAsTouched();
 
@@ -78,20 +83,37 @@ export class ProductDetails implements OnInit {
     const productlike: Partial<Product> = {
       ...(formValue as any),
       tags:
-        formValue.tags?.toLocaleLowerCase()
+        formValue.tags
+          ?.toLocaleLowerCase()
           .split(',')
           .map((tag) => tag.trim()) ?? []
     }
 
 
-    console.log({ productlike });
+    // console.log({ productlike });
 
-    this.productServ.updateProduct(this.product().id, productlike).subscribe(
-      producto => {
-        console.log('Producto actualizado');
 
-      }
-    )
+    if (this.product().id === "new") {
+      // crear producto
+      //**  el firstValue de rxjs realiza la subscirbcion automaticamente*/
+
+      const product = await firstValueFrom(
+        this.productServ.crearProduct(productlike)
+      )
+
+      console.log('Producto actualizado');
+      this.router.navigate(['/admin/products', product.id])
+
+    } else {
+      await firstValueFrom(
+        this.productServ.updateProduct(this.product().id, productlike)
+      )
+    }
+
+    this.waSave.set(true)
+    setTimeout(() => {
+      this.waSave.set(false)
+    }, 3000)
 
   }
 }

@@ -79,12 +79,12 @@ export class ProductService {
     if (this.productCache.has(idSlug)) {
       return of(this.productCache.get(idSlug)!)
     }
-
-
-    return this.http.get<Product>(`${baseUrl}/products/${idSlug}`).pipe(tap(
-      // delay(200)
-      (product) => this.productCache.set(idSlug, product)
-    ))
+    return this.http.
+      get<Product>(`${baseUrl}/products/${idSlug}`)
+      .pipe(tap(
+        // delay(200)
+        (product) => this.productCache.set(idSlug, product)
+      ))
   }
 
 
@@ -95,11 +95,9 @@ export class ProductService {
       return of(emptyProduct)
     }
 
-
     if (this.productCache.has(id)) {
       return of(this.productCache.get(id)!)
     }
-
 
     return this.http.get<Product>(`${baseUrl}/products/${id}`).pipe(tap(
       // delay(200)
@@ -109,12 +107,10 @@ export class ProductService {
 
   //*crear prodcuto
   crearProduct(productLike: Partial<Product>): Observable<Product> {
-
+    return this.http
+      .post<Product>(`${baseUrl}/products`, productLike)
+      .pipe(tap((product) => this.updateProductCache(product)))
   }
-
-
-
-
 
   //* actualizar
   updateProduct(id: string, productLike: Partial<Product>): Observable<Product> {
@@ -137,7 +133,7 @@ export class ProductService {
       })
     })
 
-
+    console.log('Cache actualizado');
 
   }
 

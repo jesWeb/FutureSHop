@@ -9,7 +9,7 @@ export function authInterceptor(
 
   const token = inject(AuthService).token();
 
-  console.log({ token });
+  // console.log("este es mi token", { token });
 
 
   const newReq = req.clone({
