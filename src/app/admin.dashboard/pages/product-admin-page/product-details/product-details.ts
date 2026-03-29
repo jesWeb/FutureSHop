@@ -1,4 +1,4 @@
-import { Component, input, inject, OnInit, signal } from '@angular/core';
+import { Component, input, inject, OnInit, signal, computed } from '@angular/core';
 import { Product } from '@app/products/interfaces/products.interface';
 import { ProductCard } from "@app/products/components/Product-card/Product-card";
 import { CarrouselProd } from "@app/products/components/Carrousel-prod/Carrousel-prod";
@@ -22,6 +22,16 @@ export class ProductDetails implements OnInit {
 
   productServ = inject(ProductService)
   waSave = signal(false)
+
+  tempImages = signal<string[]>([])
+  imageFieldList: FileList | undefined = undefined
+  visualizadorSlide = computed(() => {
+    const currentImage = [
+      ...this.product().images,
+      ...this.tempImages()
+    ]
+    return currentImage
+  })
 
   //* inyeccion de formbuilder con patterns
   productForm = this.fb.group({
@@ -116,4 +126,23 @@ export class ProductDetails implements OnInit {
     }, 3000)
 
   }
+
+  //images
+
+  onFileChanged(event: Event) {
+    //* objeto que contiene el path de nombre peso etc
+    const fileList = (event.target as HTMLInputElement).files;
+    this.imageFieldList = fileList ?? undefined
+    console.log(fileList);
+    //* convertidos a url para mostrar a pantalla
+    const imageURL = Array.from(fileList ?? []).map((file) =>
+      URL.createObjectURL(file))
+
+    console.log({ imageURL });
+    this.tempImages.set(imageURL)
+
+  }
+
+
+
 }
