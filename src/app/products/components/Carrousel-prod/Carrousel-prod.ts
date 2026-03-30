@@ -38,9 +38,18 @@ export class CarrouselProd implements AfterViewInit, OnChanges {
 
     if (!this.swipper) return;
 
-    this.swipper.destroy(true,true)
-    this.swiperInit()
+    this.swipper.destroy(true, true)
 
+    const paginadoSwip: HTMLDivElement = this.swiperDiv().nativeElement?.querySelector('.swiper-pagination')
+
+    paginadoSwip.innerHTML = ''
+
+    console.log("que llega de pagination", paginadoSwip);
+
+    setTimeout(() => {
+          this.swiperInit()
+
+    }, 100);
   }
 
 

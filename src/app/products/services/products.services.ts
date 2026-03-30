@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Gender, Product, ResponseProduct } from '@products/interfaces/products.interface';
-import { delay, map, Observable, of, tap } from 'rxjs';
+import { delay, forkJoin, map, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { User } from '@app/auth/interfaces/user.interface';
 
@@ -137,6 +137,26 @@ export class ProductService {
 
   }
 
+  //* toma files list y lo suba
 
+  //*sube varios
+  uploadImages(images?: FileList): Observable<string[]> {
+    if (!images) return of([]);
+    const uploadObservable = Array.from(images).map((imageFile) =>
+      this.uploadImage(imageFile))
+    return forkJoin(uploadObservable).pipe(
+      tap((imageNames) => console.log({ imageNames })
+      )
+    )
+  }
+
+
+  //* sube uno
+  uploadImage(image: File): Observable<string> {
+    const fromData = new FormData()
+    fromData.append('file', image)
+
+    return this.http.post<{ filename: string }>(`${baseUrl}/files/product`, fromData).pipe(map((resp) => resp.filename))
+  }
 
 }

@@ -7,7 +7,7 @@ import { FormUtils } from '@app/utils/form-utils';
 import { FormErrorLabel } from "@app/shared/components/form-error-label/form-error-label";
 import { ProductService } from '@app/products/services/products.services';
 import { Router } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 
 @Component({
   selector: 'product-details',
@@ -142,7 +142,6 @@ export class ProductDetails implements OnInit {
     this.tempImages.set(imageURL)
 
   }
-
 
 
 }
