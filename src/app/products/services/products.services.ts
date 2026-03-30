@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Gender, Product, ResponseProduct } from '@products/interfaces/products.interface';
-import { delay, forkJoin, map, Observable, of, tap } from 'rxjs';
+import { delay, forkJoin, map, Observable, of, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { User } from '@app/auth/interfaces/user.interface';
 
@@ -106,18 +106,56 @@ export class ProductService {
   }
 
   //*crear prodcuto
-  crearProduct(productLike: Partial<Product>): Observable<Product> {
-    return this.http
-      .post<Product>(`${baseUrl}/products`, productLike)
-      .pipe(tap((product) => this.updateProductCache(product)))
+  crearProduct(
+    productLike: Partial<Product>,
+    imageFile: File
+  ): Observable<Product> {
+    const currImage = productLike.images ?? []
+    return this.uploadImage(imageFile).pipe(
+      map((imageName) => ({
+        ...productLike,
+        images: [...currImage, ...imageName]
+      })),
+      switchMap((createProduct) =>
+        this.http.post<Product>(`${baseUrl}/products`, createProduct)
+      ),
+      tap((product) => this.updateProductCache(product))
+    )
+
+    // return this.http
+    //   .post<Product>(`${baseUrl}/products`, productLike)
+    //   .pipe(tap((product) => this.updateProductCache(product)))
   }
 
   //* actualizar
-  updateProduct(id: string, productLike: Partial<Product>): Observable<Product> {
-    console.log('actualizadno');
-    return this.http
-      .patch<Product>(`${baseUrl}/products/${id}`, productLike)
-      .pipe(tap((product) => this.updateProductCache(product)))
+  updateProduct(
+    id: string,
+    productLike: Partial<Product>,
+    imageFileList?: FileList
+  ): Observable<Product> {
+    //endaemaiento de observables  se ejecutan en secuendia y es ajeno a el observable
+
+    const currentImage = productLike.images ?? [];
+
+    return this.uploadImages(imageFileList).pipe(
+      //* carga de los archivos
+      map((imageNames) => ({
+        ...productLike,
+        images: [...currentImage, ...imageNames]
+      })),
+      //*http siwtch
+      switchMap((updateProduct) =>
+        this.http.patch<Product>(`${baseUrl}/products/${id}`, updateProduct)
+      ),
+      //*actualizar cache
+      tap((product) => this.updateProductCache(product))
+    )
+
+
+    // console.log('actualizadno');
+    // return this.http
+    //   .patch<Product>(`${baseUrl}/products/${id}`, productLike)
+    //   .pipe(tap((product) => this.updateProductCache(product)))
   }
 
   // * actualizar cache de producto - para VERLO DESDE LA PANTALLA DE INICIO

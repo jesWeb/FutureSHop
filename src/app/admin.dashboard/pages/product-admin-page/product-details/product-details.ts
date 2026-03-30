@@ -108,7 +108,7 @@ export class ProductDetails implements OnInit {
       //**  el firstValue de rxjs realiza la subscirbcion automaticamente*/
 
       const product = await firstValueFrom(
-        this.productServ.crearProduct(productlike)
+        this.productServ.crearProduct(productlike, this.imageFieldList)
       )
 
       console.log('Producto actualizado');
@@ -116,7 +116,7 @@ export class ProductDetails implements OnInit {
 
     } else {
       await firstValueFrom(
-        this.productServ.updateProduct(this.product().id, productlike)
+        this.productServ.updateProduct(this.product().id, productlike, this.imageFieldList)
       )
     }
 
